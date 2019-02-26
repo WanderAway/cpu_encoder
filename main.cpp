@@ -14,6 +14,7 @@ int main(int argc, char* argv[])
   u8 pm = atoi(argv[1]);
   u8 qp = atoi(argv[2]);
   encoder e(1, vector2d(352,288),16,4,pm,qp);
+
   ifstream infile("foreman.y");
   ofstream outfile("generated.y");
 

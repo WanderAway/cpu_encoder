@@ -312,9 +312,9 @@ vector2d block::mv_generate(frame* ref, frame* targ)
         cpx = px_loc;
         sad=0;
         index=0;
-        for (rpx.y = i; rpx.y<i+blk_size/* && rpx.y<ref->resolution.y*/; rpx.y++)
+        for (rpx.y = i; rpx.y<i+blk_size; rpx.y++)
         {
-          for (rpx.x = j; rpx.x<j+blk_size/* && rpx.x<ref->resolution.x*/; rpx.x++)
+          for (rpx.x = j; rpx.x<j+blk_size; rpx.x++)
           {
             res[index] = (short)(frm->get_px(cpx) ) - ref->get_px(rpx);
             sad += abs(res[index]);
@@ -582,7 +582,7 @@ void encoder::encode(ifstream& infile, ofstream& outfile, unsigned frames, unsig
       infile.read((char*)cur_frame.buf, cur_frame.size);
       if (count != frames-1)
         infile.read((char*)cur_frame2.buf, cur_frame2.size);
-      if (count % i_period)
+      if (count % i_period || i_period == 0)
       {
         // generate first two rows
         generate_pframe_row(0, &ref_frms[0], &cur_frame, &gen_frame);
@@ -648,7 +648,7 @@ void encoder::encode(ifstream& infile, ofstream& outfile, unsigned frames, unsig
       // read from infile to cur_frame
       infile.read((char*)cur_frame.buf, cur_frame.size);
 
-      if (count % i_period)
+      if (count % i_period || i_period == 0)
       {// p frame
         generate_pframe(ref);
       }
